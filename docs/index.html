@@ -1,0 +1,134 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Slide</title>
+  <link rel="stylesheet" href="index.css">
+  <style>
+    #slide-1 {
+      width: 390px;
+    }
+    #slide-2 {
+      width: 390px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Slide</h1>
+  
+  <div id="slide-1" class="athm-slide">
+    <div class="athm-slide__inner">
+      <ul class="athm-slide__track">
+        <li class="athm-slide__item">
+          <a href="####1"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic01&w=390&h=195" width="390" height="195" title="1揽胜极光  2012款 Convertible Concept"></a>
+        </li>
+        <li class="athm-slide__item">
+          <a href="####2"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic02&w=390&h=195" width="390" height="195" title="2揽胜极光  2013款 Convertible Concept"></a>
+        </li>
+        <li class="athm-slide__item">
+          <a href="####3"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic03&w=390&h=195" width="390" height="195" title="3揽胜极光  2014款 Convertible Concept"></a>
+        </li>
+        <li class="athm-slide__item">
+          <a href="####4"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic04&w=390&h=195" width="390" height="195" title="4揽胜极光  2015款 Convertible Concept"></a>
+        </li>
+        <li class="athm-slide__item">
+          <a href="####5"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic05&w=390&h=195" width="390" height="195" title="5揽胜极光  2016款 Convertible Concept"></a>
+        </li>
+      </ul>
+    </div>
+    <a class="athm-slide__prev" href="javascript:void(0);"></a>
+    <a class="athm-slide__next" href="javascript:void(0);"></a>
+    <div class="athm-slide__indicators">
+      <a class="active" href="javascript:void(0);"></a>
+      <a href="javascript:void(0);"></a>
+      <a href="javascript:void(0);"></a>
+      <a href="javascript:void(0);"></a>
+      <a href="javascript:void(0);"></a>
+    </div>
+  </div>
+
+  <p>
+    <button id="js-prev" type="button">前一帧</button>
+    <button id="js-next" type="button">后一帧</button>
+    <button id="js-goto" type="button">跳转到第 3 帧</button>
+  </p>
+
+  <div id="slide-2" class="athm-slide">
+    <div class="athm-slide__inner">
+      <ul class="athm-slide__track">
+        <li class="athm-slide__item">
+          <a href="####1"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic01&w=390&h=195" width="390" height="195" title="1揽胜极光  2012款 Convertible Concept"></a>
+        </li>
+        <li class="athm-slide__item">
+          <a href="####2"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic02&w=390&h=195" width="390" height="195" title="2揽胜极光  2013款 Convertible Concept"></a>
+        </li>
+        <li class="athm-slide__item">
+          <a href="####3"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic03&w=390&h=195" width="390" height="195" title="3揽胜极光  2014款 Convertible Concept"></a>
+        </li>
+        <li class="athm-slide__item">
+          <a href="####4"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic04&w=390&h=195" width="390" height="195" title="4揽胜极光  2015款 Convertible Concept"></a>
+        </li>
+        <li class="athm-slide__item">
+          <a href="####5"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic05&w=390&h=195" width="390" height="195" title="5揽胜极光  2016款 Convertible Concept"></a>
+        </li>
+      </ul>
+      <div class="athm-slide__prev" style="display: none;"><a href="javascript:void(0);"></a></div>
+      <div class="athm-slide__next" style="display: none;"><a href="javascript:void(0);"></a></div>
+    </div>
+    <div class="athm-slide__indicators">
+      <a class="active" href="javascript:void(0);"></a>
+      <a href="javascript:void(0);"></a>
+      <a href="javascript:void(0);"></a>
+      <a href="javascript:void(0);"></a>
+      <a href="javascript:void(0);"></a>
+    </div>
+    <div class="athm-slide__title">
+      <a href="####1">1揽胜极光  2012款 Convertible Concept</a>
+    </div>
+  </div>
+
+  <p>
+    <button id="js-pause" type="button">Pause</button>
+    <button id="js-play" type="button">Play</button>
+  </p>
+
+  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="../dist/slide.js"></script>
+  <script>
+    $('#slide-1').slide({
+      autoplay: false,
+      keyboard: true
+    });
+
+    $('#js-next').on('click', function () {
+      $('#slide-1').slide('next');
+    });
+    $('#js-prev').on('click', function () {
+      $('#slide-1').slide('prev');
+    });
+    $('#js-goto').on('click', function () {
+      $('#slide-1').slide(3);
+    });
+
+    $('#slide-2').slide({
+      duration: 400,
+      interval: 5000,
+      pause: 'hover',
+      toggleButton: true
+    });
+
+    $('#js-pause').on('click', function () {
+      $('#slide-2').slide('pause');
+    });
+
+    $('#js-play').on('click', function () {
+      $('#slide-2').slide('play');
+    });
+
+    $('#slide-2').on('slid.fe.slide', function (e, that) {
+      console.log('slid', that.number);
+    });
+  </script>
+</body>
+</html>

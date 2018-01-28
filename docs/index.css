@@ -1,0 +1,102 @@
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+.athm-slide {
+  position: relative;
+}
+.athm-slide__inner {
+  overflow: hidden;
+  position: relative;
+}
+
+.athm-slide__track {
+  width: 9999em;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.athm-slide__track:after {
+  clear: both;
+  display: table;
+  content: ' ';
+}
+
+.athm-slide__item {
+  float: left;
+}
+.athm-slide__item img {
+  vertical-align: top;
+}
+
+.athm-slide__prev,
+.athm-slide__next {
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  margin-top: -32px;
+  width: 32px;
+  height: 63px;
+  background: url("https://s.autoimg.cn/as/css-3.1.3/img/icon-focusimg-btn-png24-20131225.png") no-repeat;
+}
+.athm-slide__prev {
+  left: 0;
+  background-position: -42px 0;
+}
+.athm-slide__prev:hover {
+  background-position: 0 0;
+}
+.athm-slide__next {
+  right: 0;
+  background-position: -84px 0;
+}
+.athm-slide__next:hover {
+  background-position: -126px 0;
+}
+
+
+.athm-slide__indicators {
+  text-align: center;
+}
+.athm-slide__indicators a {
+  display: inline-block;
+  margin: 0 5px;
+  width: 10px;
+  height: 10px;
+  line-height: 10px;
+  background-color: #ccd3e4;
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.athm-slide__indicators a:hover {
+  background-color: #57b;
+}
+.athm-slide__indicators a.active {
+  width: 30px;
+  background-color: #f60;
+}
+.athm-slide__indicators--fix {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+
+.athm-slide__title {
+  line-height: 32px;
+  text-align: center;
+}
+.athm-slide__title a {
+  color: #333;
+  text-decoration: none;
+}
+.athm-slide__title a:hover {
+  color: #d60000;
+  text-decoration: underline;
+}
