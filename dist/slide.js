@@ -36,6 +36,8 @@ var Event = {
   KEYDOWN: 'keydown' + EVENT_KEY,
   MOUSEENTER: 'mouseenter' + EVENT_KEY,
   MOUSELEAVE: 'mouseleave' + EVENT_KEY,
+  TOUCHSTART: 'touchstart' + EVENT_KEY,
+  TOUCHMOVE: 'touchmove' + EVENT_KEY,
   TOUCHEND: 'touchend' + EVENT_KEY,
   CLICK: 'click' + EVENT_KEY
 };
@@ -146,8 +148,8 @@ Slide.prototype.init = function () {
   });
 
   // Touch 支持
-  if (document.hasOwnProperty && document.hasOwnProperty('ontouchstart')) {
-    that.$elem.on('touchstart.fe.slide', function (e) {
+  if ('ontouchstart' in window) {
+    that.$elem.on(Event.TOUCHSTART, function (e) {
 
       e = e.originalEvent;
       that.__touch_isDrag = true;
@@ -159,7 +161,7 @@ Slide.prototype.init = function () {
         that.__touch_startX = e.clientX;
         that.__touch_startY = e.clientY;
       }
-    }).on('touchmove.fe.slide', function (e) {
+    }).on(Event.TOUCHMOVE, function (e) {
       e = e.originalEvent;
 
       if (that.__touch_isDrag) {
@@ -178,7 +180,7 @@ Slide.prototype.init = function () {
           that.__touch_horizontal = false;
         }
       }
-    }).on('touchend.fe.slide', function () {
+    }).on(Event.TOUCHEND, function () {
       if (that.__touch_horizontal && that.__touch_endX) {
         if (that.__touch_endX - that.__touch_startX > 100) {
           $.proxy(that.prev, that)();
