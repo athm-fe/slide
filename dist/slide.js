@@ -67,8 +67,6 @@ function Slide(elem, options) {
   this.buzy = false;
   this.isMouseEnter = false; // 用来标识鼠标是否在焦点图内
   this.adjustObj = null;
-  // TODO use css('width') or get delay
-  this.size = this.$item.first().width();
 
   this.init();
 }
@@ -220,7 +218,7 @@ Slide.prototype.prev = function () {
 };
 
 Slide.prototype.go = function (index) {
-  if (index > this.size || index < 1) {
+  if (index > this.$item.length || index < 1) {
     return;
   }
 
@@ -275,7 +273,8 @@ Slide.prototype._setPoint = function () {
 
 Slide.prototype._slide = function (direction, index) {
   var that = this;
-  var duration = that.options.duration;
+  var duration = this.options.duration;
+  var size = this.$item.first().width();
   // const oldIndex = this.number;
 
   this.buzy = true;
@@ -285,17 +284,17 @@ Slide.prototype._slide = function (direction, index) {
   var _index = index;
 
   if (direction === Direction.NEXT && _index > this.$item.length) {
-    this.$track.css('left', this.size);
+    this.$track.css('left', size);
 
     var $adjustElem = this.$item.last();
-    this._adjustPosition($adjustElem, -this.$item.length * this.size);
+    this._adjustPosition($adjustElem, -this.$item.length * size);
 
     _index = 1;
   } else if (direction === Direction.PREV && _index < 1) {
-    this.$track.css('left', -this.$item.length * this.size);
+    this.$track.css('left', -this.$item.length * size);
 
     var _$adjustElem = this.$item.first();
-    this._adjustPosition(_$adjustElem, this.$item.length * this.size);
+    this._adjustPosition(_$adjustElem, this.$item.length * size);
 
     _index = this.$item.length;
   }
@@ -305,7 +304,7 @@ Slide.prototype._slide = function (direction, index) {
   this._setPoint();
 
   that.$track.animate({
-    left: -(that.number - 1) * that.size
+    left: -(that.number - 1) * size
   }, duration, function () {
     that._resetPosition();
     that.buzy = false;
