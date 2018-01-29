@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Slide</title>
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="docs/index.css">
   <style>
     #slide-1 {
       width: 390px;
@@ -93,8 +93,11 @@
     <button id="js-play" type="button">Play</button>
   </p>
 
-  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="../dist/slide.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="dist/slide.js"></script>
   <script>
     $('#slide-1').slide({
       autoplay: false,
