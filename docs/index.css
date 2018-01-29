@@ -69,14 +69,14 @@ ul, ol {
   width: 10px;
   height: 10px;
   line-height: 10px;
-  background-color: #ccd3e4;
+  background-color: #57b;
   border-radius: 10px;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s;
 }
 .athm-slide__indicators a:hover {
-  background-color: #57b;
+  background-color: #f60;
 }
 .athm-slide__indicators a.active {
   width: 30px;
