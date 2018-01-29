@@ -20,10 +20,14 @@ $ = $ && $.hasOwnProperty('default') ? $['default'] : $;
 var NAME = 'slide';
 var DATA_KEY = 'fe.slide';
 var EVENT_KEY = '.' + DATA_KEY;
-var DATA_API_KEY = '.data-api';
 var JQUERY_NO_CONFLICT = $.fn[NAME];
 var ARROW_LEFT_KEYCODE = 37; // KeyboardEvent.which value for left arrow key
 var ARROW_RIGHT_KEYCODE = 39; // KeyboardEvent.which value for right arrow key
+
+var Direction = {
+  NEXT: 'next',
+  PREV: 'prev'
+};
 
 var Event = {
   INIT: 'init' + EVENT_KEY,
@@ -33,8 +37,7 @@ var Event = {
   MOUSEENTER: 'mouseenter' + EVENT_KEY,
   MOUSELEAVE: 'mouseleave' + EVENT_KEY,
   TOUCHEND: 'touchend' + EVENT_KEY,
-  CLICK: 'click' + EVENT_KEY,
-  CLICK_DATA_API: 'click' + EVENT_KEY + DATA_API_KEY
+  CLICK: 'click' + EVENT_KEY
 };
 
 var Selector = {
@@ -62,6 +65,7 @@ function Slide(elem, options) {
   this.buzy = false;
   this.isMouseEnter = false; // 用来标识鼠标是否在焦点图内
   this.adjustObj = null;
+  // TODO use css('width') or get delay
   this.size = this.$item.first().width();
 
   this.init();
@@ -192,6 +196,8 @@ Slide.prototype.init = function () {
 
   // 设置初始位置
   that.$track.css('left', 0);
+  // 设置 Indicator 和 Title
+  that._setPoint();
 
   // 开启自动播放
   if (that.options.autoplay === true) {
@@ -200,49 +206,33 @@ Slide.prototype.init = function () {
 };
 
 Slide.prototype.next = function () {
-  if (this.buzy) {
-    return;
+  if (!this.buzy) {
+    this._slide(Direction.NEXT, this.number + 1);
   }
-  this.buzy = true;
-  this.number++;
-  if (this.number > this.$item.length) {
-    this.$track.css('left', this.size);
-
-    var adjustElem = this.$item.last();
-    this._adjustPosition(adjustElem, -this.$item.length * this.size);
-
-    this.number = 1;
-  }
-
-  this._setPoint();
-  this._animate();
 };
 
 Slide.prototype.prev = function () {
-  if (this.buzy) {
-    return;
+  if (!this.buzy) {
+    this._slide(Direction.PREV, this.number - 1);
   }
-  this.buzy = true;
-  this.number--;
-  if (this.number <= 0) {
-    this.$track.css('left', -this.$item.length * this.size);
-
-    var adjustElem = this.$item.first();
-    this._adjustPosition(adjustElem, this.$item.length * this.size);
-
-    this.number = this.$item.length;
-  }
-
-  this._setPoint();
-  this._animate();
 };
 
 Slide.prototype.go = function (index) {
-  if (this.number === index) {
+  if (index > this.size || index < 1) {
     return;
   }
-  this.number = this.number > index ? index + 1 : index - 1;
-  this[this.number > index ? 'prev' : 'next']();
+
+  if (index === this.number) {
+    return;
+  }
+
+  if (this.buzy) {
+    return;
+  }
+
+  var direction = index > this.number ? Direction.NEXT : Direction.PREV;
+
+  this._slide(direction, index);
 };
 
 Slide.prototype.play = function () {
@@ -262,13 +252,11 @@ Slide.prototype.pause = function () {
 Slide.prototype._setPoint = function () {
   var activeClass = 'active';
 
-  this.$elem.trigger(Event.SLIDE, this);
-
   this.$indicatorItem.removeClass(activeClass).eq(this.number - 1).addClass(activeClass);
 
   var $img = this.$item.eq(this.number - 1).find('img[title]');
   var title = $img.attr('title');
-  if (title) {
+  if (title && this.$title.length > 0) {
     var linkNode = $img.parent('a')[0];
 
     if (linkNode) {
@@ -283,9 +271,36 @@ Slide.prototype._setPoint = function () {
   }
 };
 
-Slide.prototype._animate = function () {
+Slide.prototype._slide = function (direction, index) {
   var that = this;
   var duration = that.options.duration;
+  // const oldIndex = this.number;
+
+  this.buzy = true;
+
+  this.$elem.trigger(Event.SLIDE, this);
+
+  var _index = index;
+
+  if (direction === Direction.NEXT && _index > this.$item.length) {
+    this.$track.css('left', this.size);
+
+    var $adjustElem = this.$item.last();
+    this._adjustPosition($adjustElem, -this.$item.length * this.size);
+
+    _index = 1;
+  } else if (direction === Direction.PREV && _index < 1) {
+    this.$track.css('left', -this.$item.length * this.size);
+
+    var _$adjustElem = this.$item.first();
+    this._adjustPosition(_$adjustElem, this.$item.length * this.size);
+
+    _index = this.$item.length;
+  }
+
+  this.number = _index;
+
+  this._setPoint();
 
   that.$track.animate({
     left: -(that.number - 1) * that.size
@@ -297,14 +312,14 @@ Slide.prototype._animate = function () {
   });
 };
 
-Slide.prototype._adjustPosition = function (elem, left) {
+Slide.prototype._adjustPosition = function ($elem, left) {
   this.adjustObj = {
-    elem: elem,
-    position: elem.css('position'),
-    left: elem.css('left')
+    $elem: $elem,
+    position: $elem.css('position'),
+    left: $elem.css('left')
   };
 
-  elem.css({
+  $elem.css({
     position: 'relative',
     left: left
   });
@@ -312,7 +327,7 @@ Slide.prototype._adjustPosition = function (elem, left) {
 
 Slide.prototype._resetPosition = function () {
   if (this.adjustObj) {
-    this.adjustObj.elem.css({
+    this.adjustObj.$elem.css({
       position: this.adjustObj.position,
       left: this.adjustObj.left
     });
