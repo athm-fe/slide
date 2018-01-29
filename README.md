@@ -36,6 +36,12 @@
 $('#slide').slide(options);
 ```
 
+```html
+<div class="athm-slide" data-toggle="slide">
+  ...
+</div>
+```
+
 ## Options
 
 参数可以通过 data attributes 或者 JavaScript 两种方式来配置.
