@@ -99,6 +99,7 @@
   <script>
     $('#slide-1').slide({
       autoplay: false,
+      circle: false,
       keyboard: true
     });
 
@@ -110,6 +111,16 @@
     });
     $('#js-goto').on('click', function () {
       $('#slide-1').slide(3);
+    });
+
+    $('#slide-1').on('slid.fe.slide', function (e, that) {
+      console.log('slid', that.number);
+    });
+    $('#slide-1').on('firstSlid.fe.slide', function (e, that) {
+      console.log('firstSlid');
+    });
+    $('#slide-1').on('lastSlid.fe.slide', function (e, that) {
+      console.log('lastSlid');
     });
 
     $('#slide-2').slide({
@@ -125,10 +136,6 @@
 
     $('#js-play').on('click', function () {
       $('#slide-2').slide('play');
-    });
-
-    $('#slide-2').on('slid.fe.slide', function (e, that) {
-      console.log('slid', that.number);
     });
   </script>
 </body>

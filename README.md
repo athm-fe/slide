@@ -50,6 +50,7 @@ Name | Type | Default | Description
 ---- | ---- | ------- | -----------
 duration | number | 400 | 动画的时长, 以毫秒为单位.
 interval | number | 5000 | 自动播放间隔时间, 以毫秒为单位.
+circle | boolean | true | 是否循环.
 autoplay | boolean | true | 是否开启自动轮播.
 keyboard | boolean | false | 开启左右快捷键操作, 默认关闭.
 pause | string or boolean | `'hover'` | 鼠标在区域内时暂停循环, 如果想取消改功能, 可以取值 `false` .
@@ -113,6 +114,10 @@ Event Type | Description
 init.fe.slide | 初始化时触发.
 slide.fe.slide | 开始切换到下一帧时, 此事件会立即触发.
 slid.fe.slide | 切换完毕时触发.
+firstSlide.fe.slide | 开始切换到第一帧时触发, 仅限 `circle: false`.
+firstSlid.fe.slide | 完成切换到第一帧时触发, 仅限 `circle: false`.
+lastSlide.fe.slide | 开始切换到最后一帧时触发, 仅限 `circle: false`.
+lastSlid.fe.slide | 完成切换到最后一帧时触发, 仅限 `circle: false`.
 
 ```javascript
 $('#slide').on('slid.fe.slide', function (e, slide) {

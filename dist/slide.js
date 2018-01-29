@@ -33,6 +33,10 @@ var Event = {
   INIT: 'init' + EVENT_KEY,
   SLIDE: 'slide' + EVENT_KEY, // 开始切换时触发
   SLID: 'slid' + EVENT_KEY, // 完成切换时触发
+  FIRST_SLIDE: 'firstSlide' + EVENT_KEY,
+  FIRST_SLID: 'firstSlid' + EVENT_KEY,
+  LAST_SLIDE: 'lastSlide' + EVENT_KEY,
+  LAST_SLID: 'lastSlid' + EVENT_KEY,
   KEYDOWN: 'keydown' + EVENT_KEY,
   MOUSEENTER: 'mouseenter' + EVENT_KEY,
   MOUSELEAVE: 'mouseleave' + EVENT_KEY,
@@ -74,6 +78,7 @@ function Slide(elem, options) {
 Slide.Default = {
   duration: 400,
   interval: 5000,
+  circle: true,
   autoplay: true,
   keyboard: false,
   pause: 'hover', // 'hover', false
@@ -83,7 +88,8 @@ Slide.Default = {
   slideTitle: '.athm-slide__title,[data-slide-title]',
   slideIndicators: '.athm-slide__indicators,[data-slide-indicators]',
   slidePrev: '.athm-slide__prev,[data-slide-prev]',
-  slideNext: '.athm-slide__next,[data-slide-next]'
+  slideNext: '.athm-slide__next,[data-slide-next]',
+  disabledClass: 'disabled'
 };
 
 Slide.prototype.init = function () {
@@ -194,10 +200,15 @@ Slide.prototype.init = function () {
     });
   }
 
+  // TODO 这里可以优化一下
   // 设置初始位置
   that.$track.css('left', 0);
   // 设置 Indicator 和 Title
   that._setPoint();
+  // 设置按钮状态
+  if (!that.options.circle && that.number === 1) {
+    that.$prev.addClass(this.options.disabledClass);
+  }
 
   // 开启自动播放
   if (that.options.autoplay === true) {
@@ -274,23 +285,54 @@ Slide.prototype._setPoint = function () {
 Slide.prototype._slide = function (direction, index) {
   var that = this;
   var duration = this.options.duration;
+  var disabledClass = this.options.disabledClass;
   var size = this.$item.first().width();
-  // const oldIndex = this.number;
 
+  // 状态信息
+  var isCircle = this.options.circle;
+  var isLast = direction === Direction.NEXT && index === this.$item.length;
+  var isLastMore = direction === Direction.NEXT && index > this.$item.length;
+  var isFirst = direction === Direction.PREV && index === 1;
+  var isFirstMore = direction === Direction.PREV && index < 1;
+
+  // const oldIndex = this.number;
+  var _index = index;
+
+  // 不允许循环播放
+  if (!isCircle && (isFirstMore || isLastMore)) {
+    return;
+  }
+
+  // 设置为切换中
   this.buzy = true;
 
   this.$elem.trigger(Event.SLIDE, this);
 
-  var _index = index;
+  if (!isCircle && isLast) {
+    this.$next.addClass(disabledClass);
+    this.$elem.trigger(Event.LAST_SLIDE, this);
 
-  if (direction === Direction.NEXT && _index > this.$item.length) {
+    // 停止轮播
+    this.pause();
+  } else {
+    this.$next.removeClass(disabledClass);
+  }
+
+  if (!isCircle && isFirst) {
+    this.$prev.addClass(disabledClass);
+    this.$elem.trigger(Event.FIRST_SLIDE, this);
+  } else {
+    this.$prev.removeClass(disabledClass);
+  }
+
+  if (isLastMore) {
     this.$track.css('left', size);
 
     var $adjustElem = this.$item.last();
     this._adjustPosition($adjustElem, -this.$item.length * size);
 
     _index = 1;
-  } else if (direction === Direction.PREV && _index < 1) {
+  } else if (isFirstMore) {
     this.$track.css('left', -this.$item.length * size);
 
     var _$adjustElem = this.$item.first();
@@ -310,6 +352,12 @@ Slide.prototype._slide = function (direction, index) {
     that.buzy = false;
 
     that.$elem.trigger(Event.SLID, that);
+
+    if (!isCircle && isLast) {
+      that.$elem.trigger(Event.LAST_SLID, that);
+    } else if (!isCircle && isFirst) {
+      that.$elem.trigger(Event.FIRST_SLID, that);
+    }
   });
 };
 
