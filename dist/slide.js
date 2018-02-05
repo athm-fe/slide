@@ -63,7 +63,6 @@ function Slide(elem, options) {
   this.$item = $(this.options.slideItem, this.$elem);
   this.$title = $(this.options.slideTitle, this.$elem);
   this.$indicators = $(this.options.slideIndicators, this.$elem);
-  this.$indicatorItem = $('a', this.$indicators);
   this.$prev = $(this.options.slidePrev, this.$elem);
   this.$next = $(this.options.slideNext, this.$elem);
 
@@ -83,6 +82,7 @@ Slide.Default = {
   keyboard: false,
   pause: 'hover', // 'hover', false
   toggleButton: false,
+  autoIndicators: false,
   slideTrack: '.athm-slide__track,[data-slide-track]',
   slideItem: '.athm-slide__item,[data-slide-item]',
   slideTitle: '.athm-slide__title,[data-slide-title]',
@@ -130,12 +130,20 @@ Slide.prototype.init = function () {
   that.$prev.on(Event.CLICK, $.proxy(that.prev, that));
   that.$next.on(Event.CLICK, $.proxy(that.next, that));
 
+  if (that.options.autoIndicators) {
+    var list = [];
+    for (var i = 0, len = that.$item.length; i < len; i++) {
+      list.push('<a href="javascript:void(0)"></a>');
+    }
+    that.$indicators.html(list.join(' '));
+  }
+
   // 触发点支持
-  that.$indicatorItem.on(Event.CLICK, function () {
+  that.$indicators.on(Event.CLICK, 'a', function () {
     if (that.buzy) {
       return;
     }
-    var index = that.$indicatorItem.index($(this)) + 1;
+    var index = that.$indicators.find('a').index(this) + 1;
     that.go(index);
   });
 
@@ -263,7 +271,7 @@ Slide.prototype.pause = function () {
 Slide.prototype._setPoint = function () {
   var activeClass = 'active';
 
-  this.$indicatorItem.removeClass(activeClass).eq(this.number - 1).addClass(activeClass);
+  this.$indicators.find('a').removeClass(activeClass).eq(this.number - 1).addClass(activeClass);
 
   var $img = this.$item.eq(this.number - 1).find('img[title]');
   var title = $img.attr('title');

@@ -39,13 +39,7 @@
     </div>
     <a class="athm-slide__prev" href="javascript:void(0);"></a>
     <a class="athm-slide__next" href="javascript:void(0);"></a>
-    <div class="athm-slide__indicators athm-slide__indicators--fix">
-      <a class="active" href="javascript:void(0);"></a>
-      <a href="javascript:void(0);"></a>
-      <a href="javascript:void(0);"></a>
-      <a href="javascript:void(0);"></a>
-      <a href="javascript:void(0);"></a>
-    </div>
+    <div class="athm-slide__indicators athm-slide__indicators--fix"></div>
   </div>
 
   <p>
@@ -100,7 +94,8 @@
     $('#slide-1').slide({
       autoplay: false,
       circle: false,
-      keyboard: true
+      keyboard: true,
+      autoIndicators: true
     });
 
     $('#js-next').on('click', function () {

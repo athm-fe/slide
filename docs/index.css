@@ -76,6 +76,7 @@ ul, ol {
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s;
+  vertical-align: middle;
 }
 .athm-slide__indicators a:hover {
   background-color: #f60;
