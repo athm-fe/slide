@@ -1,5 +1,15 @@
 # Changelog
 
+## `0.3.0`
+
+### Breaking Changes
+
+None
+
+### Features
+
+* 增加 `autoIndicators` 参数 ([7db0103](https://github.com/athm-fe/slide/commit/7db0103581cd830365248de894132f1586476468))
+
 ## `0.2.0`
 
 ### Breaking Changes

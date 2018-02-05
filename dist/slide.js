@@ -1,5 +1,5 @@
 /*!
- * @autofe/slide v0.2.0
+ * @autofe/slide v0.3.0
  * (c) 2018 Autohome Inc.
  * Released under the MIT License.
  */

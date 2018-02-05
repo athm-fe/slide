@@ -55,6 +55,7 @@ autoplay | boolean | true | 是否开启自动轮播.
 keyboard | boolean | false | 开启左右快捷键操作, 默认关闭.
 pause | string or boolean | `'hover'` | 鼠标在区域内时暂停循环, 如果想取消改功能, 可以取值 `false` .
 toggleButton | boolean | false | 鼠标移入时是否显示左右箭头.
+autoIndicators | boolean | false | 自动创建导航器
 
 ## Methods
 
