@@ -12,6 +12,12 @@
     #slide-2 {
       width: 390px;
     }
+    #slide-3 {
+      width: 390px;
+    }
+    #slide-3 .athm-slide__track {
+      height: 195px;
+    }
   </style>
 </head>
 <body>
@@ -85,6 +91,31 @@
     <button id="js-play" type="button">Play</button>
   </p>
 
+  <div id="slide-3" class="athm-slide">
+    <div class="athm-slide__inner">
+      <ul class="athm-slide__track">
+        <li class="athm-slide__item">
+          <a href="####1"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic01&w=390&h=195" width="390" height="195" title="1揽胜极光  2012款 Convertible Concept"></a>
+        </li>
+        <li class="athm-slide__item">
+          <a href="####2"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic02&w=390&h=195" width="390" height="195" title="2揽胜极光  2013款 Convertible Concept"></a>
+        </li>
+        <li class="athm-slide__item">
+          <a href="####3"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic03&w=390&h=195" width="390" height="195" title="3揽胜极光  2014款 Convertible Concept"></a>
+        </li>
+        <li class="athm-slide__item">
+          <a href="####4"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic04&w=390&h=195" width="390" height="195" title="4揽胜极光  2015款 Convertible Concept"></a>
+        </li>
+        <li class="athm-slide__item">
+          <a href="####5"><img src="https://placeholdit.imgix.net/~text?txtsize=30&txt=pic05&w=390&h=195" width="390" height="195" title="5揽胜极光  2016款 Convertible Concept"></a>
+        </li>
+      </ul>
+    </div>
+    <a class="athm-slide__prev" href="javascript:void(0);"></a>
+    <a class="athm-slide__next" href="javascript:void(0);"></a>
+    <div class="athm-slide__indicators athm-slide__indicators--fix"></div>
+  </div>
+
   <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -131,6 +162,12 @@
 
     $('#js-play').on('click', function () {
       $('#slide-2').slide('play');
+    });
+
+    $('#slide-3').slide({
+      autoplay: false,
+      autoIndicators: true,
+      fade: true
     });
   </script>
 </body>

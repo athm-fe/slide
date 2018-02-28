@@ -75,6 +75,7 @@ function Slide(elem, options) {
 }
 
 Slide.Default = {
+  fade: false,
   duration: 400,
   interval: 5000,
   circle: true,
@@ -208,11 +209,23 @@ Slide.prototype.init = function () {
     });
   }
 
-  // TODO 这里可以优化一下
   // 设置初始位置
-  that.$track.css('left', 0);
+  if (that.options.fade) {
+    that.$item.css({
+      opacity: 0,
+      position: 'absolute',
+      zIndex: 1
+    }).eq(0).css({
+      opacity: 1,
+      zIndex: 2
+    });
+  } else {
+    that.$track.css('left', 0);
+  }
+
   // 设置 Indicator 和 Title
   that._setPoint();
+
   // 设置按钮状态
   if (!that.options.circle && that.number === 1) {
     that.$prev.addClass(this.options.disabledClass);
@@ -303,7 +316,7 @@ Slide.prototype._slide = function (direction, index) {
   var isFirst = direction === Direction.PREV && index === 1;
   var isFirstMore = direction === Direction.PREV && index < 1;
 
-  // const oldIndex = this.number;
+  var oldNumber = this.number;
   var _index = index;
 
   // 不允许循环播放
@@ -334,17 +347,21 @@ Slide.prototype._slide = function (direction, index) {
   }
 
   if (isLastMore) {
-    this.$track.css('left', size);
+    if (!this.options.fade) {
+      this.$track.css('left', size);
 
-    var $adjustElem = this.$item.last();
-    this._adjustPosition($adjustElem, -this.$item.length * size);
+      var $adjustElem = this.$item.last();
+      this._adjustPosition($adjustElem, -this.$item.length * size);
+    }
 
     _index = 1;
   } else if (isFirstMore) {
-    this.$track.css('left', -this.$item.length * size);
+    if (!this.options.fade) {
+      this.$track.css('left', -this.$item.length * size);
 
-    var _$adjustElem = this.$item.first();
-    this._adjustPosition(_$adjustElem, this.$item.length * size);
+      var _$adjustElem = this.$item.first();
+      this._adjustPosition(_$adjustElem, this.$item.length * size);
+    }
 
     _index = this.$item.length;
   }
@@ -353,10 +370,26 @@ Slide.prototype._slide = function (direction, index) {
 
   this._setPoint();
 
-  that.$track.animate({
-    left: -(that.number - 1) * size
-  }, duration, function () {
-    that._resetPosition();
+  if (that.options.fade) {
+    that.$item.eq(oldNumber - 1).animate({ opacity: 0 }, duration, function () {
+      $(this).css('zIndex', 1);
+    });
+    that.$item.eq(that.number - 1).animate({ opacity: 1 }, duration, function () {
+      $(this).css('zIndex', 2);
+
+      animateCallback();
+    });
+  } else {
+    that.$track.animate({
+      left: -(that.number - 1) * size
+    }, duration, function () {
+      that._resetPosition();
+
+      animateCallback();
+    });
+  }
+
+  function animateCallback() {
     that.buzy = false;
 
     that.$elem.trigger(Event.SLID, that);
@@ -366,7 +399,7 @@ Slide.prototype._slide = function (direction, index) {
     } else if (!isCircle && isFirst) {
       that.$elem.trigger(Event.FIRST_SLID, that);
     }
-  });
+  }
 };
 
 Slide.prototype._adjustPosition = function ($elem, left) {

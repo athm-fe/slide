@@ -43,6 +43,7 @@ ul, ol {
   background-size: 100%;
   background-repeat: no-repeat;
   opacity: 0.5;
+  z-index: 3;
 }
 .athm-slide__prev:hover,
 .athm-slide__next:hover {
@@ -90,6 +91,7 @@ ul, ol {
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 3;
 }
 
 
