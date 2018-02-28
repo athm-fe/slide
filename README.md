@@ -48,6 +48,7 @@ $('#slide').slide(options);
 
 Name | Type | Default | Description
 ---- | ---- | ------- | -----------
+fade | boolean | false | 是否开启 fade 模式
 duration | number | 400 | 动画的时长, 以毫秒为单位.
 interval | number | 5000 | 自动播放间隔时间, 以毫秒为单位.
 circle | boolean | true | 是否循环.

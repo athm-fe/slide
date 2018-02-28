@@ -1,5 +1,15 @@
 # Changelog
 
+## `0.4.0`
+
+### Features
+
+* 增加 `fade` 参数 ([be7660f](https://github.com/athm-fe/slide/commit/be7660f74ef8490f9baf1ca31164fc844fe66263))
+
+### Bug Fixed
+
+* 修复Firefox下配置base target _blank 导致点击触发点时打开新标签页的问题 ([46c1e49](https://github.com/athm-fe/slide/commit/46c1e49c0efaeaaf3a7349c11642a020b9a7a048))
+
 ## `0.3.0`
 
 ### Breaking Changes
