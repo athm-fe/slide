@@ -133,7 +133,7 @@ Slide.prototype.init = function () {
   if (that.options.autoIndicators) {
     var list = [];
     for (var i = 0, len = that.$item.length; i < len; i++) {
-      list.push('<a href="javascript:void(0)"></a>');
+      list.push('<a href="javascript:void(0)" target="_self"></a>');
     }
     that.$indicators.html(list.join(' '));
   }
