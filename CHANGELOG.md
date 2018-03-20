@@ -1,5 +1,11 @@
 # Changelog
 
+## `0.4.1`
+
+### Bug Fixed
+
+* 修复自动添加 title 时获取链接地址失败的问题 ([0e1d86e](https://github.com/athm-fe/slide/commit/0e1d86e131ddc5628a61e029c4d7283c9b771b6a))
+
 ## `0.4.0`
 
 ### Features
