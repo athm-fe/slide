@@ -286,10 +286,11 @@ Slide.prototype._setPoint = function () {
 
   this.$indicators.find('a').removeClass(activeClass).eq(this.number - 1).addClass(activeClass);
 
-  var $img = this.$item.eq(this.number - 1).find('img[title]');
+  var $current = this.$item.eq(this.number - 1);
+  var $img = $current.find('img[title]');
   var title = $img.attr('title');
   if (title && this.$title.length > 0) {
-    var linkNode = $img.parent('a')[0];
+    var linkNode = $img.closest('a', $current[0])[0];
 
     if (linkNode) {
       linkNode = linkNode.cloneNode();
