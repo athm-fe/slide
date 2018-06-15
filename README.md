@@ -108,6 +108,14 @@ $('#slide').slide('play');
 $('#slide').slide(3);
 ```
 
+### `.slide('destroy')`
+
+销毁轮播控件.
+
+```javascript
+$('#slide').slide('destroy');
+```
+
 
 ## Event
 

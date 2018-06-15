@@ -1,5 +1,11 @@
 # Changelog
 
+## `0.5.0`
+
+### Feature
+
+* 增加 `destroy` 方法
+
 ## `0.4.1`
 
 ### Bug Fixed

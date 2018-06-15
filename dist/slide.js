@@ -1,5 +1,5 @@
 /*!
- * @autofe/slide v0.4.1
+ * @autofe/slide v0.5.0
  * (c) 2018 Autohome Inc.
  * Released under the MIT License.
  */
@@ -381,7 +381,7 @@ Slide.prototype._keydown = function (e) {
   }
 };
 
-Slide.prototype.destory = function () {
+Slide.prototype.destroy = function () {
   // 停止轮播
   this.pause();
 

@@ -1,6 +1,6 @@
 {
   "name": "@autofe/slide",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "A Slide library based on jQuery",
   "keywords": [
     "library",
